@@ -68,8 +68,39 @@ namespace WpfPositioning
                     double rightEyeX = (screenSize.Width / 2) + (e.RightEye.X * conversionFactorX);
                     double rightEyeY = (screenSize.Height / 2) + verticalOffset - (e.RightEye.Y * conversionFactorY);
 
-                    double leftEyeZ = e.LeftEye.Z;
-                    double rightEyeZ = e.RightEye.Z;
+                    if (e.LeftEye.Z > 600.0 && e.LeftEye.Z < 700.00)
+                    {
+                        LeftEyePositionEllipse.Opacity = 1.0;
+                    }
+                    else if (e.LeftEye.Z > 500 && e.LeftEye.Z < 800.00)
+                    {
+                        LeftEyePositionEllipse.Opacity = 0.7;
+                    }
+                    else if (e.LeftEye.Z > 400 && e.LeftEye.Z < 900.00)
+                    {
+                        LeftEyePositionEllipse.Opacity = 0.5;
+                    }
+                    else
+                    {
+                        LeftEyePositionEllipse.Opacity = 0.3;
+                    }
+
+                    if (e.RightEye.Z > 600.0 && e.RightEye.Z < 700.00)
+                    {
+                        RightEyePositionEllipse.Opacity = 1.0;
+                    }
+                    else if (e.RightEye.Z > 500 && e.RightEye.Z < 800.00)
+                    {
+                        RightEyePositionEllipse.Opacity = 0.7;
+                    }
+                    else if (e.RightEye.Z > 400 && e.RightEye.Z < 900.00)
+                    {
+                        RightEyePositionEllipse.Opacity = 0.5;
+                    }
+                    else
+                    {
+                        RightEyePositionEllipse.Opacity = 0.3;
+                    }
 
                     if (e.LeftEye.IsValid)
                     {
