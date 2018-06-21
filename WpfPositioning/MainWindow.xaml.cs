@@ -61,79 +61,53 @@ namespace WpfPositioning
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    // 0,0 is at the center of the screen
-                    // need to convert X & Y Eye positions from mm to pixels
-                    double leftEyeX = (screenSize.Width / 2) + (e.LeftEye.X * conversionFactorX);
-                    double leftEyeY = (screenSize.Height / 2) + verticalOffset - (e.LeftEye.Y * conversionFactorY);
-                    double rightEyeX = (screenSize.Width / 2) + (e.RightEye.X * conversionFactorX);
-                    double rightEyeY = (screenSize.Height / 2) + verticalOffset - (e.RightEye.Y * conversionFactorY);
-
-                    if (e.LeftEye.Z > 600.0 && e.LeftEye.Z < 700.00)
-                    {
-                        LeftEyePositionEllipse.Opacity = 1.0;
-                    }
-                    else if (e.LeftEye.Z > 500 && e.LeftEye.Z < 800.00)
-                    {
-                        LeftEyePositionEllipse.Opacity = 0.7;
-                    }
-                    else if (e.LeftEye.Z > 400 && e.LeftEye.Z < 900.00)
-                    {
-                        LeftEyePositionEllipse.Opacity = 0.5;
-                    }
-                    else
-                    {
-                        LeftEyePositionEllipse.Opacity = 0.3;
-                    }
-
-                    if (e.RightEye.Z > 600.0 && e.RightEye.Z < 700.00)
-                    {
-                        RightEyePositionEllipse.Opacity = 1.0;
-                    }
-                    else if (e.RightEye.Z > 500 && e.RightEye.Z < 800.00)
-                    {
-                        RightEyePositionEllipse.Opacity = 0.7;
-                    }
-                    else if (e.RightEye.Z > 400 && e.RightEye.Z < 900.00)
-                    {
-                        RightEyePositionEllipse.Opacity = 0.5;
-                    }
-                    else
-                    {
-                        RightEyePositionEllipse.Opacity = 0.3;
-                    }
-
-                    if (e.LeftEye.IsValid)
-                    {
-                        Canvas.SetLeft(LeftEyePositionEllipse, leftEyeX);
-                        Canvas.SetTop(LeftEyePositionEllipse, leftEyeY);
-
-                        LeftEyePositionEllipse.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        LeftEyePositionEllipse.Visibility = Visibility.Collapsed;
-                    }
-
-                    if (e.RightEye.IsValid)
-                    {
-                        Canvas.SetLeft(RightEyePositionEllipse, rightEyeX);
-                        Canvas.SetTop(RightEyePositionEllipse, rightEyeY);
-
-                        RightEyePositionEllipse.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        RightEyePositionEllipse.Visibility = Visibility.Collapsed;
-                    }
-
                     var sb = new StringBuilder();
-                    sb.AppendLine($"LeftEyePos  ({e.LeftEye.X,6:F1}mm, {e.LeftEye.Y,6:F1}mm, {e.LeftEye.Z,6:F1}mm) - ({leftEyeX,6:F1}, {leftEyeY,6:F1})");
-                    sb.AppendLine($"RightEyePos ({e.RightEye.X,6:F1}mm, {e.RightEye.Y,6:F1}mm, {e.RightEye.Z,6:F1}mm) - ({rightEyeX,6:F1}, {rightEyeY,6:F1})");
+
+                    UpdateEyeData("Left", e.LeftEye, LeftEyePositionEllipse, sb);
+                    UpdateEyeData("Right", e.RightEye, RightEyePositionEllipse, sb);
 
                     StatusTextBlock.Text = sb.ToString();
                 }));
 
             };
+        }
+
+        private void UpdateEyeData(string eyeName, EyePosition eyePosition, System.Windows.Shapes.Ellipse ellipse, StringBuilder sb)
+        {
+            // 0,0 is at the center of the screen
+            // need to convert X & Y Eye positions from mm to pixels
+            double eyePositionPixelX = (screenSize.Width / 2) + (eyePosition.X * conversionFactorX);
+            double eyePositionPixelY = (screenSize.Height / 2) + verticalOffset - (eyePosition.Y * conversionFactorY);
+            if (eyePosition.Z > 600.0 && eyePosition.Z < 700.00)
+            {
+                ellipse.Opacity = 1.0;
+            }
+            else if (eyePosition.Z > 500 && eyePosition.Z < 800.00)
+            {
+                ellipse.Opacity = 0.7;
+            }
+            else if (eyePosition.Z > 400 && eyePosition.Z < 900.00)
+            {
+                ellipse.Opacity = 0.5;
+            }
+            else
+            {
+                ellipse.Opacity = 0.3;
+            }
+
+            if (eyePosition.IsValid)
+            {
+                Canvas.SetLeft(ellipse, eyePositionPixelX);
+                Canvas.SetTop(ellipse, eyePositionPixelY);
+
+                ellipse.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ellipse.Visibility = Visibility.Collapsed;
+            }
+
+            sb.AppendLine($"{eyeName,7}EyePos  ({eyePosition.X,6:F1}mm, {eyePosition.Y,6:F1}mm, {eyePosition.Z,6:F1}mm) - ({eyePositionPixelX,6:F1}, {eyePositionPixelY,6:F1})");
         }
 
         private void FetchRawDpi(out uint rawDpiX, out uint rawDpiY)
