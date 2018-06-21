@@ -49,7 +49,9 @@ namespace WpfPositioning
             D40.Width = conversionFactorX * 40;
             D40.Height = conversionFactorY * 40;
 
-            verticalOffset = (screenSize.Height * dpiScale.DpiScaleY) / 10.0;
+            // There seems to be a 90mm offset for the data. It does not map to the screen height, 
+            // but instead seems to be realatively consistent across multiple devices.
+            verticalOffset = 90 * conversionFactorY;
 
             eyeXHost = new EyeXHost();
             eyeXHost.Start();
