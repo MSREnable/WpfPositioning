@@ -49,9 +49,6 @@ namespace WpfPositioning
             D40.Width = conversionFactorX * 40;
             D40.Height = conversionFactorY * 40;
 
-            D100.Width = conversionFactorX * 100;
-            D100.Height = conversionFactorY * 100;
-
             verticalOffset = (screenSize.Height * dpiScale.DpiScaleY) / 10.0;
 
             eyeXHost = new EyeXHost();
@@ -138,15 +135,13 @@ namespace WpfPositioning
                 case Key.System:
                     if (e.SystemKey == Key.F10)
                     {
-                        if (D100.Visibility == Visibility.Visible)
+                        if (D40.Visibility == Visibility.Visible)
                         {
-                            D100.Visibility = Visibility.Collapsed;
                             D40.Visibility = Visibility.Collapsed;
                             D4.Visibility = Visibility.Collapsed;
                         }
-                        else // if (D100.Visibility == Visibility.Collapsed)
+                        else // if (D40.Visibility == Visibility.Collapsed)
                         {
-                            D100.Visibility = Visibility.Visible;
                             D40.Visibility = Visibility.Visible;
                             D4.Visibility = Visibility.Visible;
                         }
