@@ -84,15 +84,15 @@ namespace WpfPositioning
             }
             else if (eyePosition.Z > 500 && eyePosition.Z < 800.00)
             {
-                ellipse.Opacity = 0.7;
+                ellipse.Opacity = 0.4;
             }
             else if (eyePosition.Z > 400 && eyePosition.Z < 900.00)
             {
-                ellipse.Opacity = 0.5;
+                ellipse.Opacity = 0.2;
             }
             else
             {
-                ellipse.Opacity = 0.3;
+                ellipse.Opacity = 0.1;
             }
 
             if (eyePosition.IsValid)
@@ -125,38 +125,6 @@ namespace WpfPositioning
             Close();
         }
 
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            switch(e.Key)
-            {
-                case Key.F12:
-                    if (StatusTextBlock.Visibility == Visibility.Visible)
-                    {
-                        StatusTextBlock.Visibility = Visibility.Collapsed;
-                    }
-                    else // if (StatusTextBlock.Visibility == Visibility.Collapsed)
-                    {
-                        StatusTextBlock.Visibility = Visibility.Visible;
-                    }
-                    break;
-                case Key.System:
-                    if (e.SystemKey == Key.F10)
-                    {
-                        if (D40.Visibility == Visibility.Visible)
-                        {
-                            D40.Visibility = Visibility.Collapsed;
-                            D4.Visibility = Visibility.Collapsed;
-                        }
-                        else // if (D40.Visibility == Visibility.Collapsed)
-                        {
-                            D40.Visibility = Visibility.Visible;
-                            D4.Visibility = Visibility.Visible;
-                        }
-                    }
-                    break;
-            }
-        }
-
         //https://msdn.microsoft.com/en-us/library/windows/desktop/dd145062(v=vs.85).aspx
         [DllImport("User32.dll")]
         private static extern IntPtr MonitorFromPoint([In]System.Drawing.Point pt, [In]uint dwFlags);
@@ -164,6 +132,32 @@ namespace WpfPositioning
         //https://msdn.microsoft.com/en-us/library/windows/desktop/dn280510(v=vs.85).aspx
         [DllImport("Shcore.dll")]
         private static extern IntPtr GetDpiForMonitor([In]IntPtr hmonitor, [In]DpiType dpiType, [Out]out uint dpiX, [Out]out uint dpiY);
+
+        private void DebugInformationCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if (DebugInformationCheckbox.IsChecked.HasValue && DebugInformationCheckbox.IsChecked.Value)
+            {
+                StatusTextBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                StatusTextBlock.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void PositioningReticleCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if (PositioningReticleCheckbox.IsChecked.HasValue && PositioningReticleCheckbox.IsChecked.Value)
+            {
+                D40.Visibility = Visibility.Visible;
+                D4.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                D40.Visibility = Visibility.Collapsed;
+                D4.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 
     //https://msdn.microsoft.com/en-us/library/windows/desktop/dn280511(v=vs.85).aspx

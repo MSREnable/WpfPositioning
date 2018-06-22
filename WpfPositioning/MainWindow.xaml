@@ -10,8 +10,7 @@
         WindowState="Maximized"
         WindowStyle="None"
         Loaded="Window_Loaded"
-        Background="Black"
-        KeyDown="Window_KeyDown">
+        Background="Black">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -44,5 +43,10 @@
 
         <TextBlock x:Name="StatusTextBlock" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20" Foreground="White" FontFamily="Consolas" />
         <Button x:Name="ExitButton" Content="Exit" Width="50" Height="50" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ExitButton_Click" />
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
+            <CheckBox x:Name="DebugInformationCheckbox" Content="Show Debug Data" Click="DebugInformationCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" />
+            <CheckBox x:Name="PositioningReticleCheckbox" Content="Show Positioning Reticle Guides" Click="PositioningReticleCheckbox_Click" IsChecked="True" Foreground="White" FontFamily="Consolas" />
+        </StackPanel>
     </Grid>
 </Window>
