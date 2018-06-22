@@ -65,6 +65,10 @@ namespace WpfPositioning
 
                     UpdateEyeData("Left", e.LeftEye, LeftEyePositionEllipse, sb);
                     UpdateEyeData("Right", e.RightEye, RightEyePositionEllipse, sb);
+                    if (e.LeftEye.IsValid && e.RightEye.IsValid)
+                    {
+                        sb.AppendLine($"          IPD ({e.RightEye.X - e.LeftEye.X,7:F1}mm)");
+                    }
 
                     StatusTextBlock.Text = sb.ToString();
                 }));
@@ -107,7 +111,7 @@ namespace WpfPositioning
                 ellipse.Visibility = Visibility.Collapsed;
             }
 
-            sb.AppendLine($"{eyeName,7}EyePos  ({eyePosition.X,6:F1}mm, {eyePosition.Y,6:F1}mm, {eyePosition.Z,6:F1}mm) - ({eyePositionPixelX,6:F1}, {eyePositionPixelY,6:F1})");
+            sb.AppendLine($"{eyeName,7}EyePos ({eyePosition.X,6:F1}mm, {eyePosition.Y,6:F1}mm, {eyePosition.Z,6:F1}mm) - ({eyePositionPixelX,6:F1}, {eyePositionPixelY,6:F1})");
         }
 
         private void FetchRawDpi(out uint rawDpiX, out uint rawDpiY)
